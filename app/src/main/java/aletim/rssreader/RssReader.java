@@ -1,12 +1,12 @@
 package aletim.rssreader;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,18 +21,17 @@ import java.net.URL;
  * Pääluokka joka luo käyttöliittymän ja hakee RSS-syötteen
  */
 public class RssReader extends AppCompatActivity {
+    public static final String PREFERENCE_FILE = "preferences.xml";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
-
-        //kutsutaan GetRssTask:in doInBackground-metodia
-        new GetRssTask().execute("http://muropaketti.com/feed/");
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Syötteen haku:
+        update();
     }
 
     @Override
@@ -49,13 +48,32 @@ public class RssReader extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Valittiinko "Settings"
         if (id == R.id.action_settings) {
+            //Avataan uusi activity
+            Intent intent = new Intent();
+            intent.setClass(RssReader.this, SettingsActivity.class);
+            startActivityForResult(intent, 0);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Kun palataan SettingsActivitystä, ladataan RSS-syöte uudelleen
+        update();
+    }
+
+    /**
+     * Hakee RSS-syötteen ruudulle tallennettujen asetusten perusteella (URL)
+     */
+    public void update(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //kutsutaan GetRssTask:in doInBackground-metodia, toinen parametri on varaosoite
+        new GetRssTask().execute(prefs.getString("url", "http://www.iltasanomat.fi/rss/tuoreimmat.xml"));
+
+    }
 
     /**
      * Asettaa käyttöliittymän TextView-kenttään tekstiä
@@ -88,7 +106,7 @@ public class RssReader extends AppCompatActivity {
                     out.write(buffer, 0, count);
                 }
                 byte[] response = out.toByteArray();
-                String responseString = new String(response, "UTF-8");
+                String responseString = new String(response, "iso-8859-1");
                 feed = new RssFeed(responseString);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,7 +124,12 @@ public class RssReader extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(RssFeed feed) {
-            setText(feed.getFeed());
+            try {
+                setText(feed.getFeed());
+            } catch (NullPointerException e) {
+                setText("Syötettä ei löytynyt");
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aletim.rssreader.ScrollingActivity"
+    tools:context=".RssReader"
     tools:showIn="@layout/activity_scrolling">
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:layout_margin="@dimen/text_margin" />
 
 </android.support.v4.widget.NestedScrollView>
