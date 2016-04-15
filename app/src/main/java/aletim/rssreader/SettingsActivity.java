@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class SettingsActivity extends AppCompatActivity {
-    public static final String PREFERENCE_FILE = "preferences.xml";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
