@@ -3,9 +3,15 @@
     <PreferenceCategory>
         <EditTextPreference
             android:key="url"
-            android:title="Syötteen osoite"
+            android:title="@string/address"
             android:defaultValue="http://muropaketti.com/feed/"
             android:enabled="true"/>
 
+        <ListPreference
+            android:key="lang"
+            android:title="@string/lang"
+            android:entries="@array/languages"
+            android:entryValues="@array/languageValues"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

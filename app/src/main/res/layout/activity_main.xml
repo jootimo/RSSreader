@@ -22,18 +22,16 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-
             <TextView
                 android:id="@+id/titleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" />
 
-
     </android.support.design.widget.AppBarLayout>
 
 
-    <include layout="@layout/content_scrolling" />
+    <include layout="@layout/content_main" />
 
 
 </android.support.design.widget.CoordinatorLayout>

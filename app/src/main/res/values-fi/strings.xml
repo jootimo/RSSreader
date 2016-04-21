@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="address"> RSS-syötteen osoite </string>
+    <string name="lang"> Kieli </string>
+    <string name="en"> englanti </string>
+    <string name="fi"> suomi </string>
+    <string name="action_settings"> Asetukset </string>
+</resources>

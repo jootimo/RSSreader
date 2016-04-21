@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="address"> URL of the RSS-feed </string>
+    <string name="lang"> Language </string>
+    <string name="en"> English </string>
+    <string name="fi"> Finnish </string>
+    <string name="action_settings"> Settings </string>
+</resources>

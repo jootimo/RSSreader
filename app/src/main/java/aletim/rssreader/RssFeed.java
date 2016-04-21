@@ -75,6 +75,7 @@ public class RssFeed {
                         else if(tag.equalsIgnoreCase("link")) {
                             item.setLink(text);
                         }
+
                         break;
                 }
                 eventType = parser.next();

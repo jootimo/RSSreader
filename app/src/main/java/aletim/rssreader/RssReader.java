@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
 /**
  * Pääluokka RSS-syötteen esittämiselle listanäkymässä
  */
@@ -31,7 +32,7 @@ public class RssReader extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Syötteen haku:
@@ -78,10 +79,17 @@ public class RssReader extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Päivittää käyttöliittymän, kun palataan SettingsActivitystä
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Kun palataan SettingsActivitystä, ladataan RSS-syöte uudelleen
         update();
+        recreate();
     }
 
 
@@ -100,14 +108,14 @@ public class RssReader extends AppCompatActivity {
      */
     public void setList(final RssFeed feed){
         ArrayList<String> titles = feed.getTitles();
-        System.out.println(titles.toString());
         ListView listview = (ListView) findViewById(R.id.list);
+
         //Luodaan uusi adapteri, joka huolehtii ArrayListin esittämisestä ListViewissä
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titles);
         listview.setAdapter(adapter);
 
         // Tapahtumankäsittelijä listan uutisille
-        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+        AdapterView.OnItemClickListener itemClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 System.out.println("Link: " + feed.getItems().get(position).getLink());
                 Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse(feed.getItems().get(position).getLink()));
@@ -115,7 +123,7 @@ public class RssReader extends AppCompatActivity {
 
             }
         };
-        listview.setOnItemClickListener(mMessageClickedHandler);
+        listview.setOnItemClickListener(itemClickedHandler);
 
         //Kanavan nimi yläpalkkiin:
         TextView textView = (TextView) findViewById(R.id.titleText);
