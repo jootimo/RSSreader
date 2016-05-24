@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Sisäluokka uudessa säikeessä tehtävälle RSS-syötteen haulle
+ * RSS-syotteen asynkroninen hakutehtava
  */
 public class GetRssTask extends AsyncTask<String, Void, RssFeed> {
     URL url;
@@ -27,9 +27,9 @@ public class GetRssTask extends AsyncTask<String, Void, RssFeed> {
     }
 
     /**
-     * Hakee RSS-syötteen ja jäsentää sen
-     * @param urls osoite, josta syöte haetaan
-     * @return RSS-syöte
+     * Hakee RSS-syotteen ja jasentaa sen
+     * @param urls osoite, josta syote haetaan
+     * @return RSS-syote
      */
     @Override
     protected RssFeed doInBackground(String... urls) {
@@ -38,17 +38,8 @@ public class GetRssTask extends AsyncTask<String, Void, RssFeed> {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             System.out.println("Connection made to " + url.toString());
             in = conn.getInputStream();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            for (int count; (count = in.read(buffer)) != -1; ) {
-                out.write(buffer, 0, count);
-            }
-            byte[] response = out.toByteArray();
-            //TODO: Syötteestä pitäisi hakea encoding ja luoda responseString sen mukaan
-            String responseString = new String(response, "UTF-8");
-            feed = new RssFeed(responseString);
+            feed = new RssFeed(in);
             feed.parse();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -64,8 +55,8 @@ public class GetRssTask extends AsyncTask<String, Void, RssFeed> {
     }
 
     /**
-     * Asettaa jäsennetyn RSS-syötteen päänäkymän listaan
-     * @param feed RSS-syöte
+     * Asettaa jasennetyn RSS-syotteen paanakyman listaan
+     * @param feed RSS-syote
      */
     @Override
     protected void onPostExecute(RssFeed feed) {

@@ -5,26 +5,28 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 
 /**
- * Luokka RSS-syötteen kuvaamiseen
+ * Luokka RSS-syotteen kuvaamiseen
  */
 public class RssFeed {
-    String feed;
+    InputStream in;
     String channelName;
     ArrayList<RssItem> items;
 
-    public RssFeed(String feed){
-        this.feed = feed;
+    public RssFeed(InputStream in){
+        this.in = in;
     }
 
-    public String getFeed(){
-        return feed;
+    public ArrayList<RssItem> getItems() {
+        return items;
     }
-    public ArrayList<RssItem> getItems() { return items; }
-    public String getChannelName() { return channelName; }
+    public String getChannelName() {
+        return channelName;
+    }
     public ArrayList<String> getTitles() {
         ArrayList<String> titles = new ArrayList<String>();
         for(RssItem item: items) {
@@ -42,7 +44,7 @@ public class RssFeed {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser parser = factory.newPullParser();
-            parser.setInput(new StringReader(getFeed()));
+            parser.setInput(in, null); //metodin 2. parametri olisi encoding, nyt se tunnustellaan automaattisesti
             int eventType = parser.getEventType();
             String text = "";
             RssItem item = new RssItem();

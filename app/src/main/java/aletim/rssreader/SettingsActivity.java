@@ -18,11 +18,14 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity asetusten hallintaan ja nayttamiseen
+ */
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
-     * Luo asetusvalikon ja liittää kieliasetukseen kuuntelijan
+     * Luo asetusvalikon ja liittaa kieliasetukseen kuuntelijan
      * @param savedInstanceState
      */
     @Override
@@ -54,13 +57,11 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     /**
-     * Fragment, joka näyttää listan asetuksista
+     * Fragment, joka nayttaa listan asetuksista
      */
     public static class SettingsFragment extends PreferenceFragment {
 
-        public SettingsFragment() {
-            // Required empty public constructor
-        }
+        public SettingsFragment() {}
 
         /**
          * Luo asetuslista preferences.xml-tiedoston perusteella
@@ -73,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            //Liitetään preferences.xml tähän näkymään
+            //Liitetaan preferences.xml tahan nakymaan
             addPreferencesFromResource(R.xml.preferences);
             // Inflate the layout for this fragment
             return inflater.inflate(R.layout.fragment_settings, container, false);

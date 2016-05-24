@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 
 /**
- * Pääluokka RSS-syötteen esittämiselle listanäkymässä
+ * Paaaktiviteetti RSS-syotteen esittamiselle listanakymassa
  */
 public class RssReader extends AppCompatActivity {
     public static final String DEFAULT_URL = "http://www.muropaketti.com/feed/";
 
     /**
-     * Rakentaa käyttöliittymän
+     * Rakentaa käyttoliittyman
      * @param savedInstanceState
      */
     @Override
@@ -35,9 +35,9 @@ public class RssReader extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //Syötteen haku:
+        //Syotteen haku:
         update();
-        //Vedä ylös päivittääksesi:
+        //Veda ylös paivittaaksesi:
         final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -61,7 +61,7 @@ public class RssReader extends AppCompatActivity {
     }
 
     /**
-     * Tapahtumakäsittelijä valikon alkioille
+     * Tapahtumakasittelija valikon alkioille
      * @param item klikattu alkio
      * @return
      */
@@ -80,7 +80,7 @@ public class RssReader extends AppCompatActivity {
     }
 
     /**
-     * Päivittää käyttöliittymän, kun palataan SettingsActivitystä
+     * Paivittaa kayttoliittymän, kun palataan SettingsActivitysta
      * @param requestCode
      * @param resultCode
      * @param data
@@ -94,7 +94,7 @@ public class RssReader extends AppCompatActivity {
 
 
     /**
-     * Hakee RSS-syötteen ruudulle tallennettujen asetusten perusteella (URL)
+     * Hakee RSS-syotteen ruudulle tallennettujen asetusten perusteella (URL)
      */
     public void update(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -103,8 +103,8 @@ public class RssReader extends AppCompatActivity {
     }
 
     /**
-     * Asetetaan jäsennetty syöte listanäkymään ja annetaan jokaiselle otsikolle tapahtumankäsittelijä
-     * @param feed RSS-syöte
+     * Asetetaan jasennetty syote listanäkymaan ja annetaan jokaiselle otsikolle tapahtumankasittelija
+     * @param feed RSS-syote
      */
     public void setList(final RssFeed feed){
         ArrayList<String> titles = feed.getTitles();
