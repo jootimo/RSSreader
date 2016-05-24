@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="aletim.rssreader.SettingsFragment">
+    tools:context="aletim.rssreader.SettingsActivity">
 
     <ListView
         android:id="@android:id/list"
